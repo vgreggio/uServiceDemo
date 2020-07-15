@@ -1,7 +1,7 @@
 ﻿using AGTec.Common.Base.Extensions;
 using AGTec.Common.CQRS.CommandHandlers;
 using AGTec.Common.CQRS.Messaging.ActiveMQ;
-using AGTec.Common.CQRS.Messaging.JsonSerializer;
+using AGTec.Common.CQRS.Messaging.ProtoBufSerializer;
 using AGTec.Common.CQRS.QueryHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,7 +21,7 @@ namespace uServiceDemo.Application
             services.AddInfrastructureModule(configuration);
 
             // CQRS
-            services.AddMessagingSerializer();
+            services.AddProtoBufMessagingSerializer();
             services.AddCQRSWithMessaging(configuration);
 
             // Mappers

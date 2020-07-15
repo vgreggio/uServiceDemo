@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AGTec.Common.BackgroundTaskQueue" Version="1.0.0" />
     <PackageReference Include="AGTec.Common.CQRS.Messaging.ActiveMQ" Version="1.0.0" />
-    <PackageReference Include="AGTec.Common.CQRS.Messaging.JsonSerializer" Version="1.0.0" />
+    <PackageReference Include="AGTec.Common.CQRS.Messaging.ProtoBufSerializer" Version="1.0.0" />
     <PackageReference Include="AutoMapper" Version="9.0.0" />
   </ItemGroup>
 
