@@ -11,7 +11,8 @@ namespace uServiceDemo.Application.Mappers
         {
             return new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<WeatherForecastEntity, WeatherForecast>();
+                cfg.CreateMap<WeatherForecastEntity, WeatherForecast>()
+                    .ForMember(dest => dest.TemperatureInCelsius, opts => opts.MapFrom(source => source.Temperature));
                 cfg.CreateMap<WeatherForecast, WeatherForecastEntity>();
                 cfg.CreateMap<WeatherForecastEntity, WeatherForecastCreatedEvent>()
                     .ForMember(dest => dest.TemperatureInCelsius, opts => opts.MapFrom(source => source.Temperature));
