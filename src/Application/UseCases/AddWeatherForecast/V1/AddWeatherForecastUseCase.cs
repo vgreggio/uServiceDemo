@@ -11,7 +11,7 @@ using uServiceDemo.Events;
 
 namespace uServiceDemo.Application.UseCases.AddWeatherForecast.V1
 {
-    class AddWeatherForecastUseCase : IAddWeatherForecastUseCase
+    public class AddWeatherForecastUseCase : IAddWeatherForecastUseCase
     {
         private readonly ICommandDispatcher _commandDispatcher;
         private readonly IEventDispatcher _eventDispatcher;
@@ -32,8 +32,7 @@ namespace uServiceDemo.Application.UseCases.AddWeatherForecast.V1
         public async Task<Guid> Execute(AddWeatherForecastRequest input, string username)
         {
             var correlationId = CorrelationIdAccessor.CorrelationId;
-
-            var weatherForecast = new WeatherForecastEntity(correlationId) { Temperature = input.TemperatureInCelsius, Summary = input.Summary, Date = input.Date };
+            var weatherForecast =_mapper.Map(input, new WeatherForecastEntity(correlationId));
 
             var command = new CreateWeatherForecastCommand(weatherForecast, username);
             await _commandDispatcher.Execute(command);
