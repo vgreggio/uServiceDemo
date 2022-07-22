@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using uServiceDemo.Infrastructure.Repositories.Context;
 
+#nullable disable
+
 namespace uServiceDemo.Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherForecastDbContext))]
@@ -15,9 +17,10 @@ namespace uServiceDemo.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("uServiceDemo.Domain.Entities.WeatherForecastEntity", b =>
                 {
@@ -48,11 +51,13 @@ namespace uServiceDemo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Version")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeatherForecast");
+                    b.ToTable("WeatherForecast", (string)null);
                 });
 #pragma warning restore 612, 618
         }

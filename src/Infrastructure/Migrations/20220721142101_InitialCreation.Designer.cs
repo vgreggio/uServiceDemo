@@ -7,19 +7,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using uServiceDemo.Infrastructure.Repositories.Context;
 
+#nullable disable
+
 namespace uServiceDemo.Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherForecastDbContext))]
-    [Migration("20200509020412_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220721142101_InitialCreation")]
+    partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("uServiceDemo.Domain.Entities.WeatherForecastEntity", b =>
                 {
@@ -50,11 +53,13 @@ namespace uServiceDemo.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Version")
-                        .HasColumnType("varbinary(max)");
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
-                    b.ToTable("WeatherForecast");
+                    b.ToTable("WeatherForecast", (string)null);
                 });
 #pragma warning restore 612, 618
         }

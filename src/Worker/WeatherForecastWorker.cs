@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Tasks;
 using uServiceDemo.Application;
+using uServiceDemo.Document;
 using uServiceDemo.Events;
 using uServiceDemo.Worker.BackgroundServices;
 using uServiceDemo.Worker.EventHandlers;
@@ -17,6 +18,7 @@ namespace uServiceDemo.Worker
         {
             var host = HostBuilderFactory.CreateHostBuilder(args)
                 .ConfigureServices((hostContext, services) => {
+                    services.AddDocumentModule(hostContext.Configuration);
                     services.AddApplicationModule(hostContext.Configuration);
                     services.AddTransient<IBackgroundTaskQueue, BackgroundTaskQueue>();
                     services.AddTransient<IEventHandler<WeatherForecastCreatedEvent>, WeatherForecastCreatedEventHandler>();
