@@ -25,7 +25,7 @@ namespace uServiceDemo.Api.Controllers.V1
         private const string Version = "1.0";
 
         private readonly IServiceProvider _serviceProvider;
-                private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherForecastController> _logger;
 
         public WeatherForecastController(IServiceProvider serviceProvider,
             ILogger<WeatherForecastController> logger)
@@ -36,6 +36,7 @@ namespace uServiceDemo.Api.Controllers.V1
 
         [HttpGet()]
         [ProducesResponseType(200, Type = typeof(IEnumerable<WeatherForecast>))]
+        [ProducesResponseType(401)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> List()
         {
@@ -55,6 +56,7 @@ namespace uServiceDemo.Api.Controllers.V1
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Add([FromBody] AddWeatherForecastRequest input)
         {
@@ -73,6 +75,7 @@ namespace uServiceDemo.Api.Controllers.V1
 
         [HttpGet("{id}")]
         [ProducesResponseType(200, Type = typeof(WeatherForecast))]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get([FromRoute] Guid id)
@@ -98,6 +101,7 @@ namespace uServiceDemo.Api.Controllers.V1
         [HttpPut("{id}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWeatherForecastRequest input)

@@ -2,7 +2,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using uServiceDemo.Infrastructure.Repositories.Context;
@@ -12,50 +11,48 @@ using uServiceDemo.Infrastructure.Repositories.Context;
 namespace uServiceDemo.Infrastructure.Migrations
 {
     [DbContext(typeof(WeatherForecastDbContext))]
-    [Migration("20220721142101_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20230308185204_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("uServiceDemo.Domain.Entities.WeatherForecastEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("UTC_TIMESTAMP()");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("LastUpdated")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("UTC_TIMESTAMP()");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Temperature")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("longtext");
 
-                    b.Property<byte[]>("Version")
+                    b.Property<DateTime?>("Version")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("timestamp(6)");
 
                     b.HasKey("Id");
 

@@ -14,7 +14,8 @@ namespace uServiceDemo.Infrastructure
         {
             //DbContext
             services.AddDbContext<WeatherForecastDbContext>(
-                options => options.UseSqlServer(configuration.GetConnectionString(Constants.Database.DabaseConnectionString),
+                options => options.UseMySql(configuration.GetConnectionString(Constants.Database.DabaseConnectionString), 
+                    new MySqlServerVersion(new System.Version("10.5.18")),
                     sqlOptions => sqlOptions.MigrationsAssembly(typeof(Module).Assembly.FullName)));
 
             // Repositories

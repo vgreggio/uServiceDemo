@@ -1,16 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AGTec.Common.Repository" Version="1.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Domain\uServiceDemo.Domain.csproj" />
   </ItemGroup>
-
 </Project>
