@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using uServiceDemo.Infrastructure.Repositories;
@@ -10,13 +11,22 @@ namespace uServiceDemo.Infrastructure
     {
         public static IServiceCollection AddInfrastructureModule(this IServiceCollection services,
             IConfiguration configuration)
-
         {
+            bool isDevelopment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
             //DbContext
-            services.AddDbContext<WeatherForecastDbContext>(
-                options => options.UseMySql(configuration.GetConnectionString(Constants.Database.DabaseConnectionString), 
-                    new MySqlServerVersion(new System.Version("10.5.18")),
-                    sqlOptions => sqlOptions.MigrationsAssembly(typeof(Module).Assembly.FullName)));
+            if (isDevelopment)
+            {
+                services.AddDbContext<LocalWeatherForecastDbContext>(
+                    options => options.UseSqlite(configuration.GetConnectionString(Constants.Database.DabaseConnectionString),
+                        sqlOptions => sqlOptions.MigrationsAssembly(Constants.Database.MigrationAssembly.Sqlite)));
+            }
+            else
+            {
+                services.AddDbContext<WeatherForecastDbContext>(
+                    options => options.UseNpgsql(configuration.GetConnectionString(Constants.Database.DabaseConnectionString),
+                        sqlOptions => sqlOptions.MigrationsAssembly(Constants.Database.MigrationAssembly.Postgresql)));
+            }
 
             // Repositories
             services.AddTransient<IWeatherForecastReadOnlyRepository, WeatherForecastReadOnlyRepository>();

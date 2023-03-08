@@ -9,8 +9,8 @@ using uServiceDemo.Infrastructure.Repositories.Context;
 
 namespace uServiceDemo.Infrastructure.Migrations
 {
-    [DbContext(typeof(WeatherForecastDbContext))]
-    partial class WeatherForecastDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(LocalWeatherForecastDbContext))]
+    partial class LocalWeatherForecastDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -26,7 +26,7 @@ namespace uServiceDemo.Infrastructure.Migrations
                     b.Property<DateTime>("Created")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValueSql("UTC_TIMESTAMP()");
+                        .HasDefaultValueSql("DATETIME('now')");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
@@ -34,7 +34,7 @@ namespace uServiceDemo.Infrastructure.Migrations
                     b.Property<DateTime>("LastUpdated")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("TEXT")
-                        .HasDefaultValueSql("UTC_TIMESTAMP()");
+                        .HasDefaultValueSql("DATETIME('now')");
 
                     b.Property<string>("Summary")
                         .HasColumnType("TEXT");

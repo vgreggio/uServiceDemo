@@ -363,3 +363,6 @@ FodyWeavers.xsd
 
 # Log Files
 log*.txt
+
+# VSCode
+.vscode
