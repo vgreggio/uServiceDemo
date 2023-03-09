@@ -8,7 +8,7 @@ namespace uServiceDemo.Infrastructure.Repositories.Context
         public WeatherForecastDbContext CreateDbContext(string[] args)
         {
             var builder = new DbContextOptionsBuilder<WeatherForecastDbContext>();
-            builder.UseSqlite("Host=localhost;Database=weather_forecast;Username=weather_forecast;Password=P@ssw0rd");
+            builder.UseNpgsql("Host=localhost;Database=weather_forecast;Username=weather_forecast;Password=P@ssw0rd");
             return new WeatherForecastDbContext(builder.Options);
         }
     }

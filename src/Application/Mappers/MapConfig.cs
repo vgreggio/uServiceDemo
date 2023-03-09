@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using uServiceDemo.Contracts;
 using uServiceDemo.Contracts.Requests;
+using uServiceDemo.Document.Entities;
 using uServiceDemo.Domain.Entities;
 using uServiceDemo.Events;
 
@@ -18,6 +19,8 @@ namespace uServiceDemo.Application.Mappers
                     .ForMember(dest => dest.TemperatureInCelsius, opts => opts.MapFrom(source => source.Temperature));
                 cfg.CreateMap<WeatherForecast, WeatherForecastEntity>();
                 cfg.CreateMap<WeatherForecastEntity, WeatherForecastCreatedEvent>()
+                    .ForMember(dest => dest.TemperatureInCelsius, opts => opts.MapFrom(source => source.Temperature));
+                cfg.CreateMap<WeatherForecastDoc, WeatherForecast>()
                     .ForMember(dest => dest.TemperatureInCelsius, opts => opts.MapFrom(source => source.Temperature));
             });
         }

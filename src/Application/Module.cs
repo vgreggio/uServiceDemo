@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using uServiceDemo.Application.Mappers;
+using uServiceDemo.Document;
 using uServiceDemo.Infrastructure;
 
 namespace uServiceDemo.Application
@@ -19,6 +20,9 @@ namespace uServiceDemo.Application
         {
             // Infrastructure
             services.AddInfrastructureModule(configuration);
+
+            // DocumentDB(MongoDB)
+            services.AddDocumentModule(configuration);
 
             // CQRS
             services.AddProtoBufMessagingSerializer();
