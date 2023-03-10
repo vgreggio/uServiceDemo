@@ -1,15 +1,15 @@
-﻿namespace uServiceDemo.Infrastructure
-{
-    class Constants
-    {
-        public static class Database
-        {
-            public const string DabaseConnectionString = "uServiceDemoDB";
+﻿namespace uServiceDemo.Infrastructure;
 
-            public static class Tables
-            {
-                public const string WeatherForecastTable = "WeatherForecast";
-            }
+class Constants
+{
+    public static class Database
+    {
+        public const string DabaseConnectionString = "uServiceDemoDB";
+
+        public static class Tables
+        {
+            public const string WeatherForecastTable = "WeatherForecast";
+            public const string WindTable = "Wind";
         }
     }
 }

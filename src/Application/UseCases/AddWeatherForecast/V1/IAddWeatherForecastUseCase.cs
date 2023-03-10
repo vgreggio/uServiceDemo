@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using uServiceDemo.Contracts.Requests;
 
-namespace uServiceDemo.Application.UseCases.AddWeatherForecast.V1
+namespace uServiceDemo.Application.UseCases.AddWeatherForecast.V1;
+
+public interface IAddWeatherForecastUseCase
 {
-    public interface IAddWeatherForecastUseCase
-    {
-        Task<Guid> Execute(AddWeatherForecastRequest input, string username);
-    }
+    Task<Guid> Execute(AddWeatherForecastRequest input, string username);
 }

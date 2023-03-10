@@ -14,5 +14,7 @@ namespace uServiceDemo.Document.Entities
         public int Temperature { get; set; }
 
         public string Summary { get; set; }
+        public string WindDirection { get; set; }
+        public uint WindSpeed { get; set; }
     }
 }

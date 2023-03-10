@@ -1,8 +1,8 @@
-﻿using AGTec.Common.Repository;
+using AGTec.Common.Repository;
 using uServiceDemo.Domain.Entities;
 using uServiceDemo.Infrastructure.Repositories.Context;
 
 namespace uServiceDemo.Infrastructure.Repositories;
 
-public interface IWeatherForecastRepository : IRepository<WeatherForecastEntity, WeatherForecastDbContext>
+public interface IWindRepository : IRepository<WindEntity, WeatherForecastDbContext>
 { }

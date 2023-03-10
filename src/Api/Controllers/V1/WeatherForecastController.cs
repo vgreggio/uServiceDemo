@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using StackExchange.Profiling;
 using uServiceDemo.Application.Exceptions;
 using uServiceDemo.Application.UseCases.AddWeatherForecast.V1;
 using uServiceDemo.Application.UseCases.GetWeatherForecast.V1;
@@ -15,30 +16,32 @@ using uServiceDemo.Application.UseCases.UpdateWeatherForecast.V1;
 using uServiceDemo.Contracts;
 using uServiceDemo.Contracts.Requests;
 
-namespace uServiceDemo.Api.Controllers.V1
+namespace uServiceDemo.Api.Controllers.V1;
+
+[ApiController]
+[ApiVersion(Version)]
+[Route("api/{version:apiVersion}/[controller]")]
+public class WeatherForecastController : ControllerBase
 {
-    [ApiController]
-    [ApiVersion(Version)]
-    [Route("api/{version:apiVersion}/[controller]")]
-    public class WeatherForecastController : ControllerBase
+    private const string Version = "1.0";
+
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<WeatherForecastController> _logger;
+
+    public WeatherForecastController(IServiceProvider serviceProvider,
+        ILogger<WeatherForecastController> logger)
     {
-        private const string Version = "1.0";
+        _serviceProvider = serviceProvider;
+        _logger = logger;
+    }
 
-        private readonly IServiceProvider _serviceProvider;
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(IServiceProvider serviceProvider,
-            ILogger<WeatherForecastController> logger)
-        {
-            _serviceProvider = serviceProvider;
-            _logger = logger;
-        }
-
-        [HttpGet()]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<WeatherForecast>))]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> List()
+    [HttpGet()]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<WeatherForecast>))]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> List()
+    {
+        using (MiniProfiler.Current.Step("Listing all WeatherForecast"))
         {
             try
             {
@@ -52,76 +55,76 @@ namespace uServiceDemo.Api.Controllers.V1
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+    }
 
-        [HttpPost]
-        [ProducesResponseType(201)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Add([FromBody] AddWeatherForecastRequest input)
+    [HttpPost]
+    [ProducesResponseType(201)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> Add([FromBody] AddWeatherForecastRequest input)
+    {
+        try
         {
-            try
-            {
-                var useCase = _serviceProvider.GetService<IAddWeatherForecastUseCase>();
-                var result = await useCase.Execute(input, PrincipalAccessor.Principal.GetUsernameFromClaim());
-                return CreatedAtAction(nameof(Get), new { version = Version, id = result }, input);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, e.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            }
+            var useCase = _serviceProvider.GetService<IAddWeatherForecastUseCase>();
+            var result = await useCase.Execute(input, PrincipalAccessor.Principal.GetUsernameFromClaim());
+            return CreatedAtAction(nameof(Get), new { version = Version, id = result }, input);
         }
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(200, Type = typeof(WeatherForecast))]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        catch (Exception e)
         {
-            try
-            {
-                var useCase = _serviceProvider.GetService<IGetWeatherForecastUseCase>();
-                var result = await useCase.Execute(id);
-                return Ok(result);
-            }
-            catch (NotFoundException ex)
-            {
-                _logger.LogWarning(ex, ex.Message);
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            _logger.LogError(e, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
+    }
 
-        [HttpPut("{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(401)]
-        [ProducesResponseType(404)]
-        [ProducesResponseType(500)]
-        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWeatherForecastRequest input)
+    [HttpGet("{id}")]
+    [ProducesResponseType(200, Type = typeof(WeatherForecast))]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> Get([FromRoute] Guid id)
+    {
+        try
         {
-            try
-            {
-                var useCase = _serviceProvider.GetService<IUpdateWeatherForecastUseCase>();
-                await useCase.Execute(id, input, PrincipalAccessor.Principal.GetUsernameFromClaim());
-                return Ok();
-            }
-            catch (NotFoundException ex)
-            {
-                _logger.LogWarning(ex, ex.Message);
-                return NotFound(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
+            var useCase = _serviceProvider.GetService<IGetWeatherForecastUseCase>();
+            var result = await useCase.Execute(id);
+            return Ok(result);
+        }
+        catch (NotFoundException ex)
+        {
+            _logger.LogWarning(ex, ex.Message);
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    [ProducesResponseType(200)]
+    [ProducesResponseType(400)]
+    [ProducesResponseType(401)]
+    [ProducesResponseType(404)]
+    [ProducesResponseType(500)]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWeatherForecastRequest input)
+    {
+        try
+        {
+            var useCase = _serviceProvider.GetService<IUpdateWeatherForecastUseCase>();
+            await useCase.Execute(id, input, PrincipalAccessor.Principal.GetUsernameFromClaim());
+            return Ok();
+        }
+        catch (NotFoundException ex)
+        {
+            _logger.LogWarning(ex, ex.Message);
+            return NotFound(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
 }

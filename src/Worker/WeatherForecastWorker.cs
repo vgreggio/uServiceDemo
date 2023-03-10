@@ -10,23 +10,24 @@ using uServiceDemo.Events;
 using uServiceDemo.Worker.BackgroundServices;
 using uServiceDemo.Worker.EventHandlers;
 
-namespace uServiceDemo.Worker
-{
-    public class WeatherForecastWorker
-    {
-        public static async Task Main(string[] args)
-        {
-            var host = HostBuilderFactory.CreateHostBuilder(args)
-                .ConfigureServices((hostContext, services) => {
-                    services.AddDocumentModule(hostContext.Configuration);
-                    services.AddApplicationModule(hostContext.Configuration);
-                    services.AddTransient<IBackgroundTaskQueue, BackgroundTaskQueue>();
-                    services.AddTransient<IEventHandler<WeatherForecastCreatedEvent>, WeatherForecastCreatedEventHandler>();
-                    services.AddHostedService<WeatherTopicListenerBackgroundService>();
-                 })
-                .Build();
+namespace uServiceDemo.Worker;
 
-            await host.RunAsync();
-        }
+public class WeatherForecastWorker
+{
+    public static async Task Main(string[] args)
+    {
+        var host = HostBuilderFactory.CreateHostBuilder(args)
+            .ConfigureServices((hostContext, services) =>
+            {
+                services.AddDocumentModule(hostContext.Configuration);
+                services.AddApplicationModule(hostContext.Configuration);
+                services.AddTransient<IBackgroundTaskQueue, BackgroundTaskQueue>();
+                services.AddTransient<IEventHandler<WeatherForecastCreatedEvent>, WeatherForecastCreatedEventHandler>();
+                services.AddTransient<IEventHandler<WeatherForecastUpdatedEvent>, WeatherForecastUpdatedEventHandler>();
+                services.AddHostedService<WeatherTopicListenerBackgroundService>();
+            })
+            .Build();
+
+        await host.RunAsync();
     }
 }

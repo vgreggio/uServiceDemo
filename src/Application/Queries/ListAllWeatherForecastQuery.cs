@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using uServiceDemo.Domain.Entities;
 
-namespace uServiceDemo.Application.Queries
-{
-    class ListAllWeatherForecastQuery : IQuery<IEnumerable<WeatherForecastEntity>>
-    { }
-}
+namespace uServiceDemo.Application.Queries;
+
+class ListAllWeatherForecastQuery : IQuery<IEnumerable<WeatherForecastEntity>>
+{ }

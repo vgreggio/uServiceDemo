@@ -1,27 +1,34 @@
 ﻿using AGTec.Common.BackgroundTaskQueue;
 using AGTec.Common.CQRS.Messaging;
+using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using uServiceDemo.Events;
 
-namespace uServiceDemo.Worker.BackgroundServices
+namespace uServiceDemo.Worker.BackgroundServices;
+
+class WeatherTopicListenerBackgroundService : BackgroundService<int>
 {
-    class WeatherTopicListenerBackgroundService : BackgroundService<int>
+    private const string TOPIC_NAME = "weather";
+
+    private readonly IMessageHandler _messageHandler;
+    ILogger<WeatherTopicListenerBackgroundService> _logger;
+
+    public WeatherTopicListenerBackgroundService(IMessageHandler messageHandler, 
+        ILogger<WeatherTopicListenerBackgroundService> logger)
     {
-        private readonly IMessageHandler _messageHandler;
+        _messageHandler = messageHandler;
+        _logger = logger;
+    }
 
-        public WeatherTopicListenerBackgroundService(IMessageHandler messageHandler)
-        {
-            _messageHandler = messageHandler;
-        }
+    protected override Task<int> ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _messageHandler.Handle(TOPIC_NAME, PublishType.Topic, GetType().Name);
+        _logger.LogInformation($"Start listening for messages on topic: {TOPIC_NAME}");
 
-        protected override Task<int> ExecuteAsync(CancellationToken stoppingToken)
-        {
-            _messageHandler.Handle(WeatherForecastCreatedEvent.DestName, PublishType.Topic, GetType().Name);
-            
-            while (stoppingToken.IsCancellationRequested == false) Thread.Sleep(100);
+        while (stoppingToken.IsCancellationRequested == false) Thread.Sleep(100);
 
-            return Task.FromResult(0);
-        }
+        return Task.FromResult(0);
     }
 }
+
