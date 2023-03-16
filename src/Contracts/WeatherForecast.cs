@@ -20,4 +20,3 @@ public class WeatherForecast
 
     public string UpdatedBy { get; set; }
 }
-

@@ -1,8 +1,8 @@
 ﻿using AGTec.Common.Repository.Document;
 using uServiceDemo.Document.Entities;
 
-namespace uServiceDemo.Document
+namespace uServiceDemo.Document;
+
+public interface IWeatherForecastDocRepository : IRepository<WeatherForecastDoc>
 {
-    public interface IWeatherForecastDocRepository : IRepository<WeatherForecastDoc>
-    { }
 }

@@ -1,5 +1,4 @@
 using AGTec.Microservice;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
 namespace uServiceDemo.Api;
@@ -11,6 +10,8 @@ public class Program
         CreateHostBuilder(args).Build().Run();
     }
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        HostBuilderFactory.CreateHostBuilder<Startup>(args);
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return HostBuilderFactory.CreateHostBuilder<Startup>(args);
+    }
 }

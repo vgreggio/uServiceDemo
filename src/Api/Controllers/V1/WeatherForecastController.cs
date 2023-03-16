@@ -24,9 +24,9 @@ namespace uServiceDemo.Api.Controllers.V1;
 public class WeatherForecastController : ControllerBase
 {
     private const string Version = "1.0";
+    private readonly ILogger<WeatherForecastController> _logger;
 
     private readonly IServiceProvider _serviceProvider;
-    private readonly ILogger<WeatherForecastController> _logger;
 
     public WeatherForecastController(IServiceProvider serviceProvider,
         ILogger<WeatherForecastController> logger)
@@ -35,7 +35,7 @@ public class WeatherForecastController : ControllerBase
         _logger = logger;
     }
 
-    [HttpGet()]
+    [HttpGet]
     [ProducesResponseType(200, Type = typeof(IEnumerable<WeatherForecast>))]
     [ProducesResponseType(401)]
     [ProducesResponseType(500)]

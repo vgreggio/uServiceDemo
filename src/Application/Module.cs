@@ -1,11 +1,11 @@
-﻿using AGTec.Common.Base.Extensions;
+﻿using System.Linq;
+using AGTec.Common.Base.Extensions;
 using AGTec.Common.CQRS.CommandHandlers;
 using AGTec.Common.CQRS.Messaging.ActiveMQ;
 using AGTec.Common.CQRS.Messaging.ProtoBufSerializer;
 using AGTec.Common.CQRS.QueryHandlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
 using uServiceDemo.Application.Mappers;
 using uServiceDemo.Document;
 using uServiceDemo.Infrastructure;
@@ -15,7 +15,7 @@ namespace uServiceDemo.Application;
 public static class Module
 {
     public static IServiceCollection AddApplicationModule(this IServiceCollection services,
-       IConfiguration configuration)
+        IConfiguration configuration)
 
     {
         // Infrastructure
@@ -42,6 +42,7 @@ public static class Module
     }
 
     #region UseCases
+
     private static IServiceCollection AddUseCases(this IServiceCollection services)
     {
         typeof(Module).Assembly
@@ -52,13 +53,14 @@ public static class Module
             {
                 var interfaceType = type.GetInterfaces().FirstOrDefault();
                 services.AddTransient(interfaceType, type);
-
             });
         return services;
     }
+
     #endregion
 
     #region Commands
+
     private static IServiceCollection AddCommands(this IServiceCollection services)
     {
         typeof(Module).Assembly
@@ -77,9 +79,11 @@ public static class Module
             });
         return services;
     }
+
     #endregion
 
     #region Queries
+
     private static IServiceCollection AddQueries(this IServiceCollection services)
     {
         typeof(Module).Assembly
@@ -99,6 +103,6 @@ public static class Module
 
         return services;
     }
+
     #endregion
 }
-

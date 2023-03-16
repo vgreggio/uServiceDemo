@@ -1,9 +1,9 @@
-﻿using AGTec.Common.CQRS.EventHandlers;
+﻿using System.Threading.Tasks;
 using AGTec.Common.BackgroundTaskQueue;
+using AGTec.Common.CQRS.EventHandlers;
 using AGTec.Worker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Threading.Tasks;
 using uServiceDemo.Application;
 using uServiceDemo.Document;
 using uServiceDemo.Events;

@@ -1,9 +1,9 @@
+using System;
+using System.Threading.Tasks;
 using AGTec.Common.Base.Extensions;
 using AGTec.Common.CQRS.Dispatchers;
 using AGTec.Common.CQRS.EventHandlers;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 using uServiceDemo.Application.Queries;
 using uServiceDemo.Document;
 using uServiceDemo.Domain.Entities;
@@ -11,18 +11,21 @@ using uServiceDemo.Events;
 
 namespace uServiceDemo.Worker.EventHandlers;
 
-class WeatherForecastUpdatedEventHandler : IEventHandler<WeatherForecastUpdatedEvent>
+internal class WeatherForecastUpdatedEventHandler : IEventHandler<WeatherForecastUpdatedEvent>
 {
+    private readonly ILogger<WeatherForecastUpdatedEventHandler> _logger;
     private readonly IQueryDispatcher _queryDispatcher;
     private readonly IWeatherForecastDocRepository _repository;
-    private readonly ILogger<WeatherForecastUpdatedEventHandler> _logger;
+    private readonly IWeatherForecastSearchRepository _searchRepository;
 
     public WeatherForecastUpdatedEventHandler(IQueryDispatcher queryDispatcher,
         IWeatherForecastDocRepository repository,
+        IWeatherForecastSearchRepository searchRepository,
         ILogger<WeatherForecastUpdatedEventHandler> logger)
     {
         _queryDispatcher = queryDispatcher;
         _repository = repository;
+        _searchRepository = searchRepository;
         _logger = logger;
     }
 
@@ -33,7 +36,8 @@ class WeatherForecastUpdatedEventHandler : IEventHandler<WeatherForecastUpdatedE
         try
         {
             var query = new GetWeatherForecastByIdQuery(evt.Id);
-            var weatherForecastEntity = await _queryDispatcher.Execute<GetWeatherForecastByIdQuery, WeatherForecastEntity>(query);
+            var weatherForecastEntity =
+                await _queryDispatcher.Execute<GetWeatherForecastByIdQuery, WeatherForecastEntity>(query);
             var weatherForecastDocument = await _repository.GetById(evt.Id);
 
             weatherForecastDocument.Date = weatherForecastEntity.Date;
@@ -47,10 +51,12 @@ class WeatherForecastUpdatedEventHandler : IEventHandler<WeatherForecastUpdatedE
             }
 
             await _repository.Update(weatherForecastDocument);
-            
-            _logger.LogInformation($"Finished processing WeatherForecast updated event for ID: {evt.Id}.");
+            await _searchRepository.Update(weatherForecastDocument);
 
-        } catch (Exception ex) {
+            _logger.LogInformation($"Finished processing WeatherForecast updated event for ID: {evt.Id}.");
+        }
+        catch (Exception ex)
+        {
             _logger.LogError(ex, $"Failed to process WeatherForecastUpdated event for ID: {evt.Id}");
             throw;
         }

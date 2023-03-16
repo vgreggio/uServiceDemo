@@ -5,4 +5,5 @@ using uServiceDemo.Infrastructure.Repositories.Context;
 namespace uServiceDemo.Infrastructure.Repositories;
 
 public interface IWindRepository : IRepository<WindEntity, WeatherForecastDbContext>
-{ }
+{
+}

@@ -1,9 +1,9 @@
-﻿using AGTec.Common.BackgroundTaskQueue;
+﻿using System;
+using System.Threading.Tasks;
+using AGTec.Common.BackgroundTaskQueue;
 using AGTec.Common.Base.Accessors;
 using AGTec.Common.CQRS.Dispatchers;
 using AutoMapper;
-using System;
-using System.Threading.Tasks;
 using uServiceDemo.Application.Commands;
 using uServiceDemo.Contracts.Requests;
 using uServiceDemo.Domain.Entities;
@@ -13,9 +13,9 @@ namespace uServiceDemo.Application.UseCases.AddWeatherForecast.V1;
 
 public class AddWeatherForecastUseCase : IAddWeatherForecastUseCase
 {
+    private readonly IBackgroundTaskQueue _backgroundTaskQueue;
     private readonly ICommandDispatcher _commandDispatcher;
     private readonly IEventDispatcher _eventDispatcher;
-    private readonly IBackgroundTaskQueue _backgroundTaskQueue;
     private readonly IMapper _mapper;
 
     public AddWeatherForecastUseCase(ICommandDispatcher commandDispatcher,
@@ -40,7 +40,7 @@ public class AddWeatherForecastUseCase : IAddWeatherForecastUseCase
         var evt = _mapper.Map<WeatherForecastEntity, WeatherForecastCreatedEvent>(weatherForecast);
 
         _backgroundTaskQueue.Queue($"Publishing WeatherForecastCreatedEvent for {evt.Id}",
-            (cancelationToken) => _eventDispatcher.Raise(evt));
+            cancelationToken => _eventDispatcher.Raise(evt));
 
         return weatherForecast.Id;
     }

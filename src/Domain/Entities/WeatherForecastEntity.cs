@@ -1,5 +1,5 @@
-﻿using AGTec.Common.Domain.Entities;
-using System;
+﻿using System;
+using AGTec.Common.Domain.Entities;
 
 namespace uServiceDemo.Domain.Entities;
 
@@ -7,7 +7,8 @@ public class WeatherForecastEntity : Entity
 {
     public WeatherForecastEntity(Guid id)
         : base(id)
-    { }
+    {
+    }
 
     public DateTime Date { get; set; }
 

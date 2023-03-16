@@ -4,9 +4,10 @@ using uServiceDemo.Infrastructure.Repositories.Context;
 
 namespace uServiceDemo.Infrastructure.Repositories;
 
-class WindRepository : Repository<WindEntity, WeatherForecastDbContext>, IWindRepository
+internal class WindRepository : Repository<WindEntity, WeatherForecastDbContext>, IWindRepository
 {
     public WindRepository(WeatherForecastDbContext context)
         : base(context)
-    { }
+    {
+    }
 }

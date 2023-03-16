@@ -1,21 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
 
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AGTec.Common.Randomizer" Version="1.0.0" />
-    <PackageReference Include="AGTec.Common.Test" Version="1.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="3.0.2" />
-    <PackageReference Include="coverlet.collector" Version="3.1.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AGTec.Common.Randomizer" Version="1.0.0"/>
+        <PackageReference Include="AGTec.Common.Test" Version="1.0.0"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
+        <PackageReference Include="MSTest.TestAdapter" Version="3.0.2"/>
+        <PackageReference Include="coverlet.collector" Version="3.1.2"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Application\uServiceDemo.Application.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Application\uServiceDemo.Application.csproj"/>
+    </ItemGroup>
 
 </Project>

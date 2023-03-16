@@ -1,14 +1,15 @@
-﻿using AGTec.Common.CQRS.QueryHandlers;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AGTec.Common.CQRS.QueryHandlers;
+using Microsoft.EntityFrameworkCore;
 using uServiceDemo.Application.Queries;
 using uServiceDemo.Domain.Entities;
 using uServiceDemo.Infrastructure.Repositories;
 
 namespace uServiceDemo.Application.QueryHandlers;
 
-class ListAllWeatherForecastQueryHandler : IQueryHandler<ListAllWeatherForecastQuery, IEnumerable<WeatherForecastEntity>>
+internal class
+    ListAllWeatherForecastQueryHandler : IQueryHandler<ListAllWeatherForecastQuery, IEnumerable<WeatherForecastEntity>>
 {
     private readonly IWeatherForecastReadOnlyRepository _readOnlyRespository;
 

@@ -4,7 +4,7 @@ using uServiceDemo.Domain.Entities;
 
 namespace uServiceDemo.Infrastructure.Repositories.Mappings;
 
-static class WindEntityMap
+internal static class WindEntityMap
 {
     public static void Map(EntityTypeBuilder<WindEntity> entityTypeBuilder)
     {
@@ -12,7 +12,8 @@ static class WindEntityMap
 
         entityTypeBuilder.HasKey(x => x.Id);
         entityTypeBuilder.Property(x => x.Created).ValueGeneratedOnAdd().HasDefaultValueSql("timezone('UTC', now())");
-        entityTypeBuilder.Property(x => x.LastUpdated).ValueGeneratedOnAddOrUpdate().HasDefaultValueSql("timezone('UTC', now())");
+        entityTypeBuilder.Property(x => x.LastUpdated).ValueGeneratedOnAddOrUpdate()
+            .HasDefaultValueSql("timezone('UTC', now())");
         entityTypeBuilder.Property(x => x.Version).IsRowVersion();
     }
 }

@@ -1,11 +1,11 @@
-﻿using AGTec.Common.CQRS.CommandHandlers;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using AGTec.Common.CQRS.CommandHandlers;
 using uServiceDemo.Application.Commands;
 using uServiceDemo.Infrastructure.Repositories;
 
 namespace uServiceDemo.Application.CommandHandlers;
 
-class CreateWeatherForecastCommandHandler : ICommandHandler<CreateWeatherForecastCommand>
+internal class CreateWeatherForecastCommandHandler : ICommandHandler<CreateWeatherForecastCommand>
 {
     private readonly IWeatherForecastRepository _repository;
 

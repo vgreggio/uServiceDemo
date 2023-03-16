@@ -1,8 +1,9 @@
-﻿using AGTec.Common.CQRS.Queries;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using AGTec.Common.CQRS.Queries;
 using uServiceDemo.Domain.Entities;
 
 namespace uServiceDemo.Application.Queries;
 
-class ListAllWeatherForecastQuery : IQuery<IEnumerable<WeatherForecastEntity>>
-{ }
+internal class ListAllWeatherForecastQuery : IQuery<IEnumerable<WeatherForecastEntity>>
+{
+}

@@ -1,20 +1,19 @@
-﻿using AGTec.Common.BackgroundTaskQueue;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using AGTec.Common.BackgroundTaskQueue;
 using AGTec.Common.CQRS.Messaging;
 using Microsoft.Extensions.Logging;
-using System.Threading;
-using System.Threading.Tasks;
-using uServiceDemo.Events;
 
 namespace uServiceDemo.Worker.BackgroundServices;
 
-class WeatherTopicListenerBackgroundService : BackgroundService<int>
+internal class WeatherTopicListenerBackgroundService : BackgroundService<int>
 {
     private const string TOPIC_NAME = "weather";
 
     private readonly IMessageHandler _messageHandler;
-    ILogger<WeatherTopicListenerBackgroundService> _logger;
+    private ILogger<WeatherTopicListenerBackgroundService> _logger;
 
-    public WeatherTopicListenerBackgroundService(IMessageHandler messageHandler, 
+    public WeatherTopicListenerBackgroundService(IMessageHandler messageHandler,
         ILogger<WeatherTopicListenerBackgroundService> logger)
     {
         _messageHandler = messageHandler;
@@ -31,4 +30,3 @@ class WeatherTopicListenerBackgroundService : BackgroundService<int>
         return Task.FromResult(0);
     }
 }
-

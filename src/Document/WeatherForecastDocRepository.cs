@@ -1,12 +1,12 @@
 ﻿using AGTec.Common.Repository.Document;
 using uServiceDemo.Document.Entities;
 
-namespace uServiceDemo.Document
+namespace uServiceDemo.Document;
+
+public class WeatherForecastDocRepository : Repository<WeatherForecastDoc>, IWeatherForecastDocRepository
 {
-    public class WeatherForecastDocRepository : Repository<WeatherForecastDoc>, IWeatherForecastDocRepository
+    public WeatherForecastDocRepository(IDocumentContext context)
+        : base(context)
     {
-        public WeatherForecastDocRepository(IDocumentContext context) 
-            : base(context)
-        { }
     }
 }

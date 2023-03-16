@@ -1,9 +1,9 @@
-﻿using AGTec.Common.Base.ValueObjects;
+﻿using System;
+using AGTec.Common.Base.ValueObjects;
 using AGTec.Common.CQRS.Attributes;
 using AGTec.Common.CQRS.Events;
 using AGTec.Common.CQRS.Messaging;
 using ProtoBuf;
-using System;
 
 namespace uServiceDemo.Events;
 
@@ -15,6 +15,5 @@ public class WeatherForecastCreatedEvent : ValueObject, IEvent
     public const string Version = "1.0";
     public const string DestName = "weather";
 
-    [ProtoMember(1)]
-    public Guid Id { get; set; }
+    [ProtoMember(1)] public Guid Id { get; set; }
 }

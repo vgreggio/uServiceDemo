@@ -5,11 +5,9 @@ namespace uServiceDemo.Contracts.Requests;
 
 public class AddWeatherForecastRequest
 {
-    [Required]
-    public DateTime Date { get; set; }
+    [Required] public DateTime Date { get; set; }
 
-    [Required]
-    public int TemperatureInCelsius { get; set; }
+    [Required] public int TemperatureInCelsius { get; set; }
 
     [Required]
     [MinLength(3)]

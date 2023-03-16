@@ -8,7 +8,8 @@ public class WeatherForecastDbContext : DbContext
 {
     public WeatherForecastDbContext(DbContextOptions options)
         : base(options)
-    { }
+    {
+    }
 
     public DbSet<WeatherForecastEntity> WeatherForecasts { get; set; }
 

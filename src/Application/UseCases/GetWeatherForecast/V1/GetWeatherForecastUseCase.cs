@@ -1,7 +1,7 @@
-﻿using AGTec.Common.CQRS.Dispatchers;
-using AutoMapper;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using AGTec.Common.CQRS.Dispatchers;
+using AutoMapper;
 using uServiceDemo.Application.Exceptions;
 using uServiceDemo.Application.Queries;
 using uServiceDemo.Contracts;
@@ -9,10 +9,10 @@ using uServiceDemo.Domain.Entities;
 
 namespace uServiceDemo.Application.UseCases.GetWeatherForecast.V1;
 
-class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
+internal class GetWeatherForecastUseCase : IGetWeatherForecastUseCase
 {
-    private readonly IQueryDispatcher _queryDispatcher;
     private readonly IMapper _mapper;
+    private readonly IQueryDispatcher _queryDispatcher;
 
     public GetWeatherForecastUseCase(IQueryDispatcher queryDispatcher,
         IMapper mapper)

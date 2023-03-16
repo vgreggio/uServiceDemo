@@ -7,7 +7,7 @@ using uServiceDemo.Events;
 
 namespace uServiceDemo.Application.Mappers;
 
-static class MapConfig
+internal static class MapConfig
 {
     public static MapperConfiguration GetMapperConfiguration()
     {

@@ -3,7 +3,7 @@ using uServiceDemo.Domain.Entities;
 
 namespace uServiceDemo.Application.Commands;
 
-class UpdateWeatherForecastCommand : ICommand
+internal class UpdateWeatherForecastCommand : ICommand
 {
     public UpdateWeatherForecastCommand(WeatherForecastEntity weatherForecast, string username)
     {
@@ -14,4 +14,3 @@ class UpdateWeatherForecastCommand : ICommand
     public WeatherForecastEntity WeatherForecast { get; }
     public string Username { get; }
 }
-

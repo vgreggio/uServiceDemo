@@ -1,5 +1,5 @@
-﻿using AGTec.Common.CQRS.Queries;
-using System;
+﻿using System;
+using AGTec.Common.CQRS.Queries;
 using uServiceDemo.Domain.Entities;
 
 namespace uServiceDemo.Application.Queries;

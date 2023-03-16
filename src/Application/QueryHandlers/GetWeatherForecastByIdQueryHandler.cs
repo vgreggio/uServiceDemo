@@ -1,14 +1,14 @@
-﻿using AGTec.Common.CQRS.QueryHandlers;
+﻿using System.Threading.Tasks;
+using AGTec.Common.CQRS.QueryHandlers;
 using AGTec.Common.Repository.Extensions;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 using uServiceDemo.Application.Queries;
 using uServiceDemo.Domain.Entities;
 using uServiceDemo.Infrastructure.Repositories;
 
 namespace uServiceDemo.Application.QueryHandlers;
 
-class GetWeatherForecastByIdQueryHandler : IQueryHandler<GetWeatherForecastByIdQuery, WeatherForecastEntity>
+internal class GetWeatherForecastByIdQueryHandler : IQueryHandler<GetWeatherForecastByIdQuery, WeatherForecastEntity>
 {
     private readonly IWeatherForecastReadOnlyRepository _readOnlyRespository;
 

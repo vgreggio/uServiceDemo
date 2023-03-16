@@ -4,5 +4,7 @@ using uServiceDemo.Infrastructure.Repositories.Context;
 
 namespace uServiceDemo.Infrastructure.Repositories;
 
-public interface IWeatherForecastReadOnlyRepository : IReadOnlyRepository<WeatherForecastEntity, WeatherForecastDbContext>
-{ }
+public interface
+    IWeatherForecastReadOnlyRepository : IReadOnlyRepository<WeatherForecastEntity, WeatherForecastDbContext>
+{
+}

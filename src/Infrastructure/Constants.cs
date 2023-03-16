@@ -1,6 +1,6 @@
 ﻿namespace uServiceDemo.Infrastructure;
 
-class Constants
+internal class Constants
 {
     public static class Database
     {

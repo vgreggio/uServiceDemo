@@ -1,8 +1,8 @@
-﻿using AGTec.Common.BackgroundTaskQueue;
+﻿using System;
+using System.Threading.Tasks;
+using AGTec.Common.BackgroundTaskQueue;
 using AGTec.Common.CQRS.Dispatchers;
 using AutoMapper;
-using System;
-using System.Threading.Tasks;
 using uServiceDemo.Application.Commands;
 using uServiceDemo.Application.Exceptions;
 using uServiceDemo.Application.Queries;
@@ -12,13 +12,13 @@ using uServiceDemo.Events;
 
 namespace uServiceDemo.Application.UseCases.UpdateWeatherForecast.V1;
 
-class UpdateWeatherForecastUseCase : IUpdateWeatherForecastUseCase
+internal class UpdateWeatherForecastUseCase : IUpdateWeatherForecastUseCase
 {
-    private readonly IQueryDispatcher _queryDispatcher;
+    private readonly IBackgroundTaskQueue _backgroundTaskQueue;
     private readonly ICommandDispatcher _commandDispatcher;
     private readonly IEventDispatcher _eventDispatcher;
-    private readonly IBackgroundTaskQueue _backgroundTaskQueue;
     private readonly IMapper _mapper;
+    private readonly IQueryDispatcher _queryDispatcher;
 
     public UpdateWeatherForecastUseCase(IQueryDispatcher queryDispatcher,
         ICommandDispatcher commandDispatcher,
@@ -31,7 +31,6 @@ class UpdateWeatherForecastUseCase : IUpdateWeatherForecastUseCase
         _eventDispatcher = eventDispatcher;
         _backgroundTaskQueue = backgroundTaskQueue;
         _mapper = mapper;
-
     }
 
     public async Task Execute(Guid id, UpdateWeatherForecastRequest input, string username)
@@ -52,6 +51,6 @@ class UpdateWeatherForecastUseCase : IUpdateWeatherForecastUseCase
         var evt = _mapper.Map<WeatherForecastEntity, WeatherForecastUpdatedEvent>(entity);
 
         _backgroundTaskQueue.Queue($"Publishing WeatherForecastUpdatedEvent for {evt.Id}",
-            (cancelationToken) => _eventDispatcher.Raise(evt));
+            cancelationToken => _eventDispatcher.Raise(evt));
     }
 }
