@@ -11,9 +11,5 @@
         <ProjectReference Include="..\Document\uServiceDemo.Document.csproj"/>
         <ProjectReference Include="..\Events\uServiceDemo.Events.csproj"/>
     </ItemGroup>
-    <ItemGroup>
-        <None Update="appsettings.json">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
+
 </Project>
